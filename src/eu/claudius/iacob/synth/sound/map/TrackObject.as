@@ -16,8 +16,11 @@ public class TrackObject {
 
     /**
      * Base class for all entities that can be added to a Track.
-     * @param $type
-     * @param id
+     * @param   $type
+     *          The particular type of this TrackObject instance.
+     *
+     * @param   id
+     *          A unique id to represent this TrackObject instance.
      */
     public function TrackObject($type:String, id:String = null) {
         _$type = $type;

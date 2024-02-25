@@ -18,8 +18,8 @@ public class NoteAttackInfo {
      * value of the parent NoteTrackObject, which, in turn, builds upon the base value of its parent Track.
      *
      * @see eu.claudius.iacob.synth.sound.map.Track
-     * @see eu.claudius.iacob.synth.sound.map.NoteTrackObject
      * @see eu.claudius.iacob.synth.sound.map.TrackObject
+     * @see eu.claudius.iacob.synth.sound.map.NoteTrackObject
      *
      * @param   pitchIndex
      *          The MIDI pitch to use in the produced "noteOn" message, 0 to 126, with `60` representing "middle C".
@@ -27,10 +27,9 @@ public class NoteAttackInfo {
      * @param   velocityOffset
      *          Offset, expressed as a percent of the parent NoteTrackObject's calculated velocity value.
      *          Only affects the related "noteOn" message.
-     *          Example: `0.5` reduces the parent NoteTrackObject's velocity to half, while `2` doubles it.
-     *          Out of range values will be automatically corrected. Changes are volatile, i.e., the parent
-     *          NoteTrackObject's velocity value is not, itself, modified. Optional, defaults to `1`,
-     *          which has no effect.
+     *          Example: `0.5` gives the equivalent of half the base value, while `2` gives its double. Resulting
+     *          out-of-range values will be automatically floored/ceiled. Changes are volatile, i.e., the base
+     *          value is not, itself, modified. Optional, defaults to `1`, which has no effect.
      *
      * @param   timeOffset
      *          Offset, in milliseconds, to delay or expedite (on the timeline) the produced "noteOn" message. This
@@ -40,11 +39,10 @@ public class NoteAttackInfo {
      *          values expedite. Optional, defaults to 0.
      *
      * @param   durationOffset
-     *          Offset, in milliseconds, to delay or expedite (on the timeline) the produced "noteOff" message. This
-     *          argument is intended to be used in implementing "arpegiatto" (strumming pitches of a chord, by
-     *          giving each but the first note a slight delay). Can also increase degree of realism by deliberately
-     *          avoiding precisely simultaneous note attack when reproducing chords. Positive values delay, negative
-     *          values expedite. Optional, defaults to 0.
+     *          Offset, in milliseconds, to delay or expedite (on the timeline) the produced "noteOff" message.Can
+     *          increase degree of realism by deliberately avoiding precisely simultaneous note release when reproducing
+     *          chords. Positive values delay noteOffs (lengthening the duration), while negative values expedite them
+     *          (thus shortening the duration). Optional, defaults to 0, for no change.
      *
      * @param   panOffset
      *          Non-standard, non-MIDI instruction to shift played ("attacked") note in stereo space. This will
@@ -59,13 +57,13 @@ public class NoteAttackInfo {
      * @param   tiesLeft
      *          If `true`, the "noteOn" message for this NoteAttackInfo will be omitted; combined with a `tiesRight`
      *          of `true` on the previous NoteAttackInfo of the same pitch, this will result in the implementation
-     *          of a musical "tie", where a played note "holds onto" next one of the same pitch.
+     *          of a musical "tie", where a played note "holds into" the next one of the same pitch.
      *          Optional, default `false`.
      *
      * @param   tiesRight
-     *          If `true`, the "noteOff" message for this NoteAttackInfo will be omitted; combined with a `tiesRight`
+     *          If `true`, the "noteOff" message for this NoteAttackInfo will be omitted; combined with a `tiesLeft`
      *          of `true` on the next NoteAttackInfo of the same pitch, this will result in the implementation of a
-     *          musical "tie", where a played note "holds onto" the next one of the same pitch.
+     *          musical "tie", where a played note "holds into" the next one of the same pitch.
      *          Optional, default `false`.
      *
      * @param   tieGroupId

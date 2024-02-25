@@ -6,14 +6,14 @@ public class AnnotationAction {
 
     /**
      * Defines one job to be done when the playhead reaches a specific portion of the pre-rendered audio material.
-     * One or more AnnotationAction instances are packed inside an AnnotationAction group.
+     * One or more AnnotationAction instances are packed inside an AnnotationTask group.
      *
      * @param   type
-     *          String defining the type of action to be carried on on the target denoted by given `targetId`.
+     *          String defining the type of action to be carried on upon the target denoted by given `targetId`.
      *
      * @param   targetId
-     *          A String denoting an object that is to receive, or to "benefit from" all the operations described
-     *          by the given `actions` list.
+     *          A String denoting an object that is to receive, or to "benefit from" the operation described
+     *          by the given `type`.
      */
     public function AnnotationAction(type:String, targetId:String) {
         _type = type;

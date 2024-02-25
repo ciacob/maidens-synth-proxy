@@ -381,8 +381,8 @@ public class SynthProxy extends EventDispatcher implements ISynthProxy {
     }
 
     /**
-     * Fired at regular intervals by the Sound object responsible with "streamed" playback, i.e., playing beck the
-     * rendered sound while it is rendered.
+     * Fired at regular intervals by the Sound object responsible with "streamed" playback, i.e., playing back the
+     * rendered sound while it is being rendered.
      *
      * @param   event
      *          A SampleDataEvent instance to be used as a vehicle for feeding sound samples into the audio interface.
@@ -696,7 +696,7 @@ public class SynthProxy extends EventDispatcher implements ISynthProxy {
      *          Position, in the `samples` ByteArray, to start observing from.
      *
      * @param   windowSize
-     *          Number of bytes to observe counting from `windowStart`.
+     *          Number of bytes to observe, counting from `windowStart`.
      *
      * @return  A positive number greater than or equal to `0`.
      */

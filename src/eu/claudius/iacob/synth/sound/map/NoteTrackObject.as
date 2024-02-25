@@ -11,14 +11,15 @@ public class NoteTrackObject extends TrackObject {
     /**
      * Track-assignable entity that is directly responsible with playing and/or releasing notes.
      * In MIDI terms, a NoteTrackObject is essentially a producer of "noteOn" and/or "noteOff" messages
-     * that are to be issued simultaneously. Also, a NoteTrackObject can cause a number of side effects,
-     * such as producing CC messages right before and/or after the "note..." messages (e.g., a NoteTrackObject
-     * could issue a CC7 message to turn up volume right before playing a chord, just in case mere velocity
-     * won't do).
+     * that are to be issued simultaneously (e.g., as is the case when you play a chord on a keyboard).
+     *
+     * Also, a NoteTrackObject can cause a number of side effects, such as producing CC messages right before and/or
+     * after the "note[On|Off]" messages (e.g., a NoteTrackObject could issue a CC7 message to turn up volume right
+     * before playing a chord, just in case mere velocity won't do).
      *
      * @param   attackList
      *          Vector of NoteAttackInfo objects containing information about the notes to be played. A MIDI
-     *          "noteOn" message will be produced for each element in this list. Optional. If not given, a
+     *          "noteOn" message will be produced for each element in this list. Optional; if not given, a
      *          "musical rest" is assumed.
      *
      * @param   id
@@ -39,16 +40,16 @@ public class NoteTrackObject extends TrackObject {
      *          (i.e., being able to strum a chord louder in its entirety, as opposed to playing some of its
      *          pitches louder, which is a job for the `velocityOffset` argument of the NoteAttackInfo class'
      *          constructor).
-     *          Example: `0.5` reduces the base velocity value to half, while `2` doubles it. Out of range values
-     *          will be automatically corrected. Changes are volatile, i.e., the base value is not, itself, modified.
-     *          Optional, defaults to `1`, which has no effect.
+     *          Example: `0.5` gives the equivalent of half the base value, while `2` gives its double. Resulting
+     *          out-of-range values will be automatically floored/ceiled. Changes are volatile, i.e., the base
+     *          value is not, itself, modified. Optional, defaults to `1`, which has no effect.
      *
      * @param   volumeOffset
      *          Offset, expressed as a percent of the parent Track's current "base volume" value. Intended to support
      *          phrasing and stress when velocity alone may not provide sufficient dynamic separation.
-     *          Example: 0.5 reduces the base volume to half, while `2` doubles it. Out of range values will be
-     *          automatically corrected. Changes are volatile, i.e., the base value is not, itself, modified.
-     *          Optional, defaults to `1`, which has no effect.
+     *          Example: `0.5` gives the equivalent of half the base value, while `2` gives its double. Resulting
+     *          out-of-range values will be automatically floored/ceiled. Changes are volatile, i.e., the base value is
+     *          not, itself, modified. Optional, defaults to `1`, which has no effect.
      *
      * @param   panOffset
      *          Offset, expressed as a percent of the parent Track's current "base pan" value. Intended to support
@@ -56,9 +57,9 @@ public class NoteTrackObject extends TrackObject {
      *          that this argument pans a chord entirely, as opposed to the `panOffset` argument of the
      *          NoteAttackInfo class' constructor, which can refine the effect by further stereo shifting individual
      *          pitches.
-     *          Example: `0.5` reduces the base pan value to half, while `2` doubles it. Changes are volatile, i.e.,
-     *          the base value is not, itself, modified. Optional, defaults to `1`, which leaves the base value
-     *          unmodified.
+     *          Example: `0.5` gives the equivalent of half the base value, while `2` gives its double. Resulting
+     *          out-of-range values will be automatically floored/ceiled. Changes are volatile, i.e., the base value is
+     *          not, itself, modified. Optional, defaults to `1`, which has no effect.
      *
      */
     public function NoteTrackObject(attackList:Vector.<NoteAttackInfo> = null,

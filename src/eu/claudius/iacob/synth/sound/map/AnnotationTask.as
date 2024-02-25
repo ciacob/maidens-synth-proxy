@@ -11,7 +11,7 @@ public class AnnotationTask {
      *
      * @param   actions
      *          List of AnnotationAction instances, where each AnnotationAction describes a single operation
-     *          to be carried on the object pointed to by the given `targetId`.
+     *          to be carried on upon the object pointed to by its given `targetId`.
      */
     public function AnnotationTask(actions:Vector.<AnnotationAction>) {
         _actions = actions;

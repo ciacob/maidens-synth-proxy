@@ -156,7 +156,7 @@ public class Timeline {
      * Tracks content, then you must manually rebuild labels to reflect the new reality.
      *
      * @param   name
-     *          The name to use for the label; should be unique; in case o conflicts, the last registered wins.
+     *          The name to use for the label; should be unique; in case of conflicts, the last registered wins.
      *
      * @param   time
      *          The point in time, in milliseconds, to associate with given `name`. There can be several names
@@ -191,7 +191,7 @@ public class Timeline {
      *
      * @param   allowance
      *          The amount of variation, in milliseconds, to tolerate for given `time`, i.e., actual label's
-     *          time might be within that much error margin (either positive or negative). Optional, defaults to 0.
+     *          time might be within that error margin (either positive or negative). Optional, defaults to 0.
      *
      * @return  The number of labels actually removed.
      */
@@ -298,7 +298,7 @@ public class Timeline {
 
     /**
      * Registers an optional handler to preprocess Tracks material before sending it to the synth. The typical use
-     * would be to alter velocity, volume and/or start time / end time in order to increase degree of realism of
+     * would be to alter velocity, volume and/or start time/end time in order to increase the degree of realism of the
      * played back material.
      *
      * @param preProcessor
@@ -577,7 +577,7 @@ public class Timeline {
      *
      * @param   allowance
      *          The amount of variation, in milliseconds, to tolerate for given `time`, i.e., actual label's
-     *          time might be within that much error margin (either positive or negative). Optional, defaults to 0.
+     *          time might be within that error margin (either positive or negative). Optional, defaults to 0.
      *
      * @return  A (possibly empty) collection of matching label names.
      */

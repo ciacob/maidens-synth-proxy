@@ -18,7 +18,7 @@ public class Track {
      *
      * A variable number of Tracks (but at least one) are expected to be added to a parent Timeline, and they are
      * time-synchronized with a one millisecond granularity. When reading back the Timeline, all added tracks
-     * are inspected simultaneously, for each millisecond the Timeline play-head enters into.
+     * are inspected simultaneously, for each millisecond the Timeline's playhead enters into.
      * @constructor
      * @see eu.claudius.iacob.synth.sound.map.Timeline
      *
@@ -26,12 +26,31 @@ public class Track {
      * normally expect in a multi-track MIDI editor, such as muting, solo-ing or globally setting volume, pan or
      * velocity.
      *
-     * @param label
-     * @param preset
-     * @param id
-     * @param baseVolume
-     * @param basePan
-     * @param baseVelocity
+     * @param   label
+     *          A label to be associated with this Track, such as a musical instrument's name, e.g., "Violin".
+     *
+     * @param   preset
+     *          The (default) MIDI instrument (i.e., timbre definition) to use when playing back the notes added to this
+     *          Track. This deviates from the MIDI standard, which stipulates that patch numbers are to be associated
+     *          with CHANNEL's instead (e.g., if we associate patch number `40` to channel `1`, then all notes on that
+     *          channel will use a violin timbre).
+     *
+     * @param   id
+     *          A unique id to represent this Track.
+     *
+     * @param   baseVolume
+     *          Reserved for future use. The (default) amplification ("volume" in MIDI) to use when playing back the
+     *          notes added to this Track.
+     *
+     * @param   basePan
+     *          Reserved for future use. The (default) stereophonic panning (e.g. amplitude distribution between left
+     *          and right channels) to use  when playing back the notes added to this Track.
+     *
+     * @param   baseVelocity
+     *          Reserved for future use. The (default) amplification to assume for each of the notes added to this Track
+     *          that do not provide some amplification information of their own. Future implementations might as well
+     *          use this in order to request timbre alterations from the synth (e.g., more harmonics as a result of
+     *          "striking" a piano key harder).
      */
     public function Track(label:String, preset:int, id:String = null,
                           baseVolume:int = 63, basePan:int = 63, baseVelocity:int = 63) {

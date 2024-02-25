@@ -4,6 +4,7 @@ import ro.ciacob.utils.Strings;
 public class AnnotationTrackObject extends TrackObject {
     private var _annotation:String;
     private var _payload:Object;
+    private var _id:String
 
     /**
      * Track-assignable entity that is directly responsible with triggering actions that are synchronized to the
@@ -20,10 +21,12 @@ public class AnnotationTrackObject extends TrackObject {
      *
      * @param   payload
      *          Complex data to describe this AnnotationTrackObject, if a mere String won't do. Optional, but if missing,
-     *          `annotation` is mandatory
+     *          `annotation` is mandatory.
+     *
+     * @throws  If both `annotation` and `payload` arguments are null.
      */
     public function AnnotationTrackObject(annotation:String = null, id:String = null, payload:Object = null) {
-        var _id:String = (id || Strings.UUID);
+        _id = (id || Strings.UUID);
         super(TrackObject.TYPE_ANNOTATION, _id);
         if (annotation == null && payload == null) {
             throw ('`Annotation` and `payload` arguments cannot both be null when creating an AnnotationTrackObject.');
@@ -44,6 +47,13 @@ public class AnnotationTrackObject extends TrackObject {
      */
     public function get payload():Object {
         return _payload;
+    }
+
+    /**
+     * @see TrackObject.id
+     */
+    override public function get id():String {
+        return _id;
     }
 }
 }

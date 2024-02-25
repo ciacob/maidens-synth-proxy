@@ -8,13 +8,14 @@ public class TrackObjectWindow {
     /**
      * Helper class to represent the position a TrackObject currently holds on a Track.
      * @param   trackObject
-     *          The TrackObject information is related with.
+     *          The TrackObject this information is related with.
      *
      * @param   startTime
-     *          The number of the millisecond the TrackObject is placed on the Track.
+     *          The starting position, in milliseconds, the related TrackObject is placed at, on its parent Track.
      *
      * @param   timeSpan
-     *          On how many milliseconds the TrackObject is replicated on the Track.
+     *          The duration, in milliseconds, the related TrackObject occupies (technically: it is replicated for) on
+     *          its parent Track.
      */
     public function TrackObjectWindow(trackObject:TrackObject, startTime:int, timeSpan:int) {
         _trackObject = trackObject;
