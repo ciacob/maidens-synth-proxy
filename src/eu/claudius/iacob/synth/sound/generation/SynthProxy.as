@@ -38,7 +38,6 @@ public class SynthProxy extends EventDispatcher implements ISynthProxy {
     private static const SAMPLES_CHUNK_SIZE:uint = 8192;
 
     private var _channelObserverClosure:Function;
-    private var _synthShell:CLibInit;
     private var _synth:Object
     private var _currPreset:int = -1;
     private var _audioStorage:ByteArray;
@@ -77,7 +76,6 @@ public class SynthProxy extends EventDispatcher implements ISynthProxy {
      * @constructor
      */
     public function SynthProxy(audioStorage:ByteArray) {
-        _synthShell = new CLibInit;
         _annotationTasks = [];
         _noteStorages = {};
         _audioStorage = audioStorage;
@@ -99,9 +97,9 @@ public class SynthProxy extends EventDispatcher implements ISynthProxy {
     }
 
     /**
-     * Renders offline the music described in the given `tracks` and returns the resulting samples inside of a
-     * ByteArray. This samples can be fed into the system's default sound interface via the `data` property of the
-     * SampleDataEvent dispatched by a playing Sound object (see documentation on flash.media.Sound for details).
+     * Renders offline the music described in the given `tracks` and stores it inside the ByteArray this class was
+     * initialized with. Resulting samples can be fed into the system's default sound interface via the `data` property
+     * of the SampleDataEvent dispatched by a playing Sound object (see documentation on flash.media.Sound for details).
      *
      *
      * @param   sounds
@@ -126,10 +124,6 @@ public class SynthProxy extends EventDispatcher implements ISynthProxy {
      *          Optional. If given, will not clear the audio previously rendered in same-id sessions. Enables streaming
      *          a large map of "tracks", by "slicing" it in smaller chunks, and rendering the slices just in time, while
      *          playing them back.
-     *
-     * @return  Returns the same instance of the ByteArray that is internally stored, and that will be used for
-     *          playback; this gives the client code a chance to modify the prerendered audio material before playing it
-     *          back (e.g., to add reverb, work on the EQ or dynamics, etc.).
      */
     public function preRenderAudio(sounds:Object, tracks:Array, normalizePeak:Boolean = false,
                                    sessionId:String = null):void {
@@ -177,7 +171,8 @@ public class SynthProxy extends EventDispatcher implements ISynthProxy {
         if (_audioChanged) {
             var numSamples:uint = (_audioStorage.length / SynthCommon.SAMPLE_BYTE_SIZE);
             _audioStorage.position = 0;
-            _preRenderedSound.loadPCMFromByteArray(_audioStorage, numSamples, SAMPLE_STORAGE_FORMAT, false, DEFAULT_SAMPLE_RATE);
+            _preRenderedSound.loadPCMFromByteArray(_audioStorage, numSamples, SAMPLE_STORAGE_FORMAT, false,
+                    DEFAULT_SAMPLE_RATE);
             _audioChanged = false;
         }
         _preRenderedChannel = _preRenderedSound.play(_lastPlaybackPosition);
@@ -512,6 +507,7 @@ public class SynthProxy extends EventDispatcher implements ISynthProxy {
         _currPreset = preset;
         var soundFonts:ByteArray = _getSoundsForPreset(preset);
         if (soundFonts) {
+            var _synthShell:CLibInit = new CLibInit();
             _synthShell.supplyFile(GENERIC_SOUND_FONT_NAME, soundFonts);
             _synth = _synthShell.init();
             _synth.fluidsynth_init(SOUND_FONT_DEFAULT_BANK_NUMBER, SOUND_FONT_DEFAULT_PRESET_NUMBER);
