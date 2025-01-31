@@ -20,3 +20,6 @@ lib/.DS_Store
 
 /.vscode
 /asconfig.json
+
+.vscode/
+asconfig.json
