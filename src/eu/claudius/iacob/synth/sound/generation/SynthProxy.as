@@ -513,16 +513,11 @@ package eu.claudius.iacob.synth.sound.generation {
          *          If the shared synth instance is already configured with the given `preset`, nothing happens.
          */
         private function _configureSynthFor(preset:int):void {
-            if (preset == _currPreset) {
-                return;
-            }
-            _currPreset = preset;
-            var soundFonts:ByteArray = _getSoundsForPreset(preset);
-            if (soundFonts) {
-                if (_synth) {
-                    _synth.supplySoundFont(GENERIC_SOUND_FONT_NAME, soundFonts);
-                    _synth.initSynth(SOUND_FONT_DEFAULT_BANK_NUMBER, preset);
-                }
+            if (_synth && (preset !== _currPreset)) {
+                _currPreset = preset;
+                var soundFonts:ByteArray = _getSoundsForPreset(preset);
+                _synth.supplySoundFont(GENERIC_SOUND_FONT_NAME, soundFonts);
+                _synth.initSynth(SOUND_FONT_DEFAULT_BANK_NUMBER, preset);
             }
         }
 
@@ -531,7 +526,7 @@ package eu.claudius.iacob.synth.sound.generation {
          *
          * - If a matching `.sf2` file exists, its contents are returned.
          * - If no match is found, a **default** `.sf2` file is used as a fallback.
-         * - If the requested content has **already been delivered**, this method returns `null`, 
+         * - If the requested content has **already been delivered**, this method returns `null`,
          *   since the client code is expected to cache it externally.
          *
          * @param   preset
